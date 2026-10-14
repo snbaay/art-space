@@ -32,7 +32,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.ui.tooling.preview.Devices
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,26 +136,73 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
         else -> R.string.art_3_year
     }
 
-    Column(
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
             .safeDrawingPadding()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+            .padding(16.dp)
     ) {
-        ArtworkWall(
-            imageRes = imageRes,
-            contentDescriptionRes = titleRes,
-            modifier = Modifier.weight(1f).fillMaxWidth()
-        )
-        ArtworkDescriptor(
-            titleRes = titleRes,
-            artistRes = artistRes,
-            yearRes = yearRes
-        )
-        DisplayController(onPrevious = {}, onNext = {})
+        val onPrevious = {
+            currentArtwork = when (currentArtwork) {
+                1 -> 3
+                2 -> 1
+                else -> 2
+            }
+        }
+        val onNext = {
+            currentArtwork = when (currentArtwork) {
+                1 -> 2
+                2 -> 3
+                else -> 1
+            }
+        }
+
+        if (maxWidth > maxHeight) {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                ArtworkWall(
+                    imageRes = imageRes,
+                    contentDescriptionRes = titleRes,
+                    modifier = Modifier.weight(1f).fillMaxHeight()
+                )
+                Column(
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)
+                ) {
+                    ArtworkDescriptor(titleRes = titleRes, artistRes = artistRes, yearRes = yearRes)
+                    DisplayController(onPrevious = onPrevious, onNext = onNext)
+                }
+            }
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                ArtworkWall(
+                    imageRes = imageRes,
+                    contentDescriptionRes = titleRes,
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                )
+                ArtworkDescriptor(titleRes = titleRes, artistRes = artistRes, yearRes = yearRes)
+                DisplayController(onPrevious = onPrevious, onNext = onNext)
+            }
+        }
     }
+}
+
+@Preview(name = "Tablet", device = Devices.TABLET)
+@Composable
+fun ArtSpaceTabletPreview() {
+    ArtSpaceTheme { ArtSpaceApp() }
+}
+
+@Preview(name = "Phone landscape", widthDp = 891, heightDp = 411)
+@Composable
+fun ArtSpaceLandscapePreview() {
+    ArtSpaceTheme { ArtSpaceApp() }
 }
 
 @Preview(showBackground = true)
