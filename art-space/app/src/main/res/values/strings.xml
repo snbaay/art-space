@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Art Space</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="artist_year">%1$s (%2$s)</string>
+    <string name="art_1_title">Название 1</string>
+    <string name="art_1_artist">Автор 1</string>
+    <string name="art_1_year">2024</string>
+    <string name="art_2_title">Название 2</string>
+    <string name="art_2_artist">Автор 2</string>
+    <string name="art_2_year">2024</string>
+    <string name="art_3_title">Название 3</string>
+    <string name="art_3_artist">Автор 3</string>
+    <string name="art_3_year">2024</string>
+</resources>
