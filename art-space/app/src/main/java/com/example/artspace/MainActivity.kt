@@ -17,6 +17,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.artspace.ui.theme.ArtSpaceTheme
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +51,30 @@ fun ArtworkWall(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(24.dp)
+        )
+    }
+}
+
+@Composable
+fun ArtworkDescriptor(
+    @StringRes titleRes: Int,
+    @StringRes artistRes: Int,
+    @StringRes yearRes: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .padding(16.dp)
+    ) {
+        Text(
+            text = stringResource(titleRes),
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Text(
+            text = stringResource(R.string.artist_year, stringResource(artistRes), stringResource(yearRes)),
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }
