@@ -22,6 +22,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Button
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +79,25 @@ fun ArtworkDescriptor(
             text = stringResource(R.string.artist_year, stringResource(artistRes), stringResource(yearRes)),
             style = MaterialTheme.typography.bodyLarge
         )
+    }
+}
+
+@Composable
+fun DisplayController(
+    onPrevious: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Button(onClick = onPrevious, modifier = Modifier.weight(1f)) {
+            Text(stringResource(R.string.previous))
+        }
+        Button(onClick = onNext, modifier = Modifier.weight(1f)) {
+            Text(stringResource(R.string.next))
+        }
     }
 }
 
