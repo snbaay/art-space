@@ -25,6 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.tooling.preview.Preview
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,5 +107,30 @@ fun DisplayController(
 
 @Composable
 fun ArtSpaceApp(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .safeDrawingPadding()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        ArtworkWall(
+            imageRes = R.drawable.art_1,
+            contentDescriptionRes = R.string.art_1_title,
+            modifier = Modifier.weight(1f).fillMaxWidth()
+        )
+        ArtworkDescriptor(
+            titleRes = R.string.art_1_title,
+            artistRes = R.string.art_1_artist,
+            yearRes = R.string.art_1_year
+        )
+        DisplayController(onPrevious = {}, onNext = {})
+    }
+}
 
+@Preview(showBackground = true)
+@Composable
+fun ArtSpaceAppPreview() {
+    ArtSpaceTheme { ArtSpaceApp() }
 }
