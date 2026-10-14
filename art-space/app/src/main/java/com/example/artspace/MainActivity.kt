@@ -28,6 +28,10 @@ import androidx.compose.material3.Button
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 
 
 class MainActivity : ComponentActivity() {
@@ -107,6 +111,29 @@ fun DisplayController(
 
 @Composable
 fun ArtSpaceApp(modifier: Modifier = Modifier) {
+    var currentArtwork by remember { mutableIntStateOf(1) }
+
+    val imageRes = when (currentArtwork) {
+        1 -> R.drawable.art_1
+        2 -> R.drawable.art_2
+        else -> R.drawable.art_3
+    }
+    val titleRes = when (currentArtwork) {
+        1 -> R.string.art_1_title
+        2 -> R.string.art_2_title
+        else -> R.string.art_3_title
+    }
+    val artistRes = when (currentArtwork) {
+        1 -> R.string.art_1_artist
+        2 -> R.string.art_2_artist
+        else -> R.string.art_3_artist
+    }
+    val yearRes = when (currentArtwork) {
+        1 -> R.string.art_1_year
+        2 -> R.string.art_2_year
+        else -> R.string.art_3_year
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -116,14 +143,14 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         ArtworkWall(
-            imageRes = R.drawable.art_1,
-            contentDescriptionRes = R.string.art_1_title,
+            imageRes = imageRes,
+            contentDescriptionRes = titleRes,
             modifier = Modifier.weight(1f).fillMaxWidth()
         )
         ArtworkDescriptor(
-            titleRes = R.string.art_1_title,
-            artistRes = R.string.art_1_artist,
-            yearRes = R.string.art_1_year
+            titleRes = titleRes,
+            artistRes = artistRes,
+            yearRes = yearRes
         )
         DisplayController(onPrevious = {}, onNext = {})
     }
